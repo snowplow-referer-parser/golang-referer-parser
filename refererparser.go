@@ -83,7 +83,10 @@ func lookup(uri *url.URL, q string, suffix bool) (refResult *RefererResult) {
 
 // Parse an url and extract referer, it returns a RefererResult.
 func Parse(uri string) (refResult *RefererResult) {
-	puri, _ := url.Parse(uri)
+	puri, parseErr := url.Parse(uri)
+	if parseErr != nil {
+		return;
+	}
 	// Split before the first dot ".".
 	parts := strings.SplitAfterN(puri.Host, ".", 2)
 	rhost := ""
